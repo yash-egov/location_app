@@ -3,7 +3,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location_app/bloc/bloc/locations_bloc.dart';
+import 'package:location_app/bloc/bloc/city_lat_lon_bloc.dart';
+import 'package:location_app/bloc/locations/locations_bloc.dart';
 import 'package:location_app/data/data.dart';
 import 'package:location_app/my_card.dart';
 import 'package:location_app/weather_page.dart';
@@ -80,44 +81,49 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('Locations'),
       ),
-      body: BlocBuilder<LocationsBloc, LocationsState>(
+      body: BlocBuilder<CityLatLonBloc, CityLatLonState>(
         builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                ExpansionTile(
-                  title: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Search Location',
-                      border: OutlineInputBorder(),
+          return BlocBuilder<LocationsBloc, LocationsState>(
+            builder: (context, state) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    ExpansionTile(
+                      title: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          hintText: 'Search Location',
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (value) => _filterLocations(value),
+                      ),
+                      children: state.allCities
+                          .map((city) => Center(
+                                child: ListTile(
+                                  tileColor: Colors.grey,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              WeatherPage(city)),
+                                    );
+                                  },
+                                  title: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Icon(Icons.location_city),
+                                        Text('$city'),
+                                      ]),
+                                ),
+                              ))
+                          .toList(),
                     ),
-                    onChanged: (value) => _filterLocations(value),
-                  ),
-                  children: state.allCities
-                      .map((city) => Center(
-                            child: ListTile(
-                              tileColor: Colors.grey,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => WeatherPage(city)),
-                                );
-                              },
-                              title: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Icon(Icons.location_city),
-                                    Text('$city'),
-                                  ]),
-                            ),
-                          ))
-                      .toList(),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           );
         },
       ),

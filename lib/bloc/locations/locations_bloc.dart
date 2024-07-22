@@ -9,9 +9,6 @@ part 'locations_state.dart';
 class LocationsBloc extends Bloc<LocationsEvent, LocationsState> {
   LocationsBloc() : super(LocationsInitial()) {
     on<filterLocationsEvent>((event, emit) {
-      // TODO: implement event handler
-      // print("Hello inside Event file");
-      // print(event.cities);
       emit(LocationsState(event.cities));
     });
   }
