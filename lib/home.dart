@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,16 +8,18 @@ import 'package:location_app/bloc/bloc/city_lat_lon_bloc.dart';
 import 'package:location_app/bloc/locations/locations_bloc.dart';
 import 'package:location_app/data/data.dart';
 import 'package:location_app/my_card.dart';
+import 'package:location_app/router/app_router.dart';
 import 'package:location_app/weather_page.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+@RoutePage()
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -102,12 +105,16 @@ class _HomeState extends State<Home> {
                                 child: ListTile(
                                   tileColor: Colors.grey,
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              WeatherPage(city)),
-                                    );
+                                    // context.router.push(WeatherPageScreen(city)
+                                    //     as PageRouteInfo);
+                                    AutoRouter.of(context)
+                                        .push(WeatherPageRoute(city: city));
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           WeatherPageScreen(city)),
+                                    // );
                                   },
                                   title: Row(
                                       mainAxisAlignment:
@@ -131,8 +138,8 @@ class _HomeState extends State<Home> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: Home(),
-  ));
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: Home(),
+//   ));
+// }

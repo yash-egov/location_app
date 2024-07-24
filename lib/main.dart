@@ -5,13 +5,16 @@ import 'package:location_app/bloc/city_weather/city_weather_bloc.dart';
 import 'package:location_app/bloc/locations/locations_bloc.dart';
 import 'package:location_app/home.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location_app/router/app_router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final _appRouter = AppRouter();
 
   // This widget is the root of your application.
   @override
@@ -28,9 +31,9 @@ class MyApp extends StatelessWidget {
           create: (context) => CityWeatherBloc(),
         ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
+        routerConfig: _appRouter.config(),
         debugShowCheckedModeBanner: false,
-        home: Home(),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -10,17 +11,18 @@ import 'package:dio/dio.dart';
 
 import 'package:location_app/show_weather.dart';
 
-class WeatherPage extends StatefulWidget {
+@RoutePage()
+class WeatherPageScreen extends StatefulWidget {
   final String city;
-  const WeatherPage(this.city, {Key? key}) : super(key: key);
+  const WeatherPageScreen(this.city, {Key? key}) : super(key: key);
 
   @override
-  State<WeatherPage> createState() => _WeatherPageState(city);
+  State<WeatherPageScreen> createState() => _WeatherPageScreenState(city);
 }
 
-class _WeatherPageState extends State<WeatherPage> {
+class _WeatherPageScreenState extends State<WeatherPageScreen> {
   final String city;
-  _WeatherPageState(this.city);
+  _WeatherPageScreenState(this.city);
 
   double? latitude, longitude;
   Weatherdetails? data;
