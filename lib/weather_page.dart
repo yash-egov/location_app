@@ -109,7 +109,7 @@ class _WeatherPageScreenState extends State<WeatherPageScreen> {
   @override
   Widget build(BuildContext context) {
     Future<void> _delayedBuild() async {
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
     }
 
     return Scaffold(
