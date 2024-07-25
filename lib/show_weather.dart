@@ -59,21 +59,6 @@ class ShowWeather extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20)),
             child: Center(
                 child: Text(
-              "Weather Description : ${data!.weather_description}",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            )),
-          ),
-          Container(
-            height: screenHeight,
-            width: screenWidth,
-            margin: EdgeInsets.fromLTRB(
-                boxMargin, boxMargin1, boxMargin, boxMargin1),
-            padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255, 0, 94, 255),
-                borderRadius: BorderRadius.circular(20)),
-            child: Center(
-                child: Text(
               "Min Temperature : ${data!.min_temp}",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             )),
