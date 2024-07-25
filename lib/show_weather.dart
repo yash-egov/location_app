@@ -7,42 +7,124 @@ class ShowWeather extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ListTile(
-          title: Text("Temperature : ${data!.temp}"),
-          // titleTextStyle: ,
-        ),
-        ListTile(
-          title: Text('Weather: ${data!.weather}'),
-          // tileColor: Colors.indigo,
-        ),
-        ListTile(
-          title: Text('Weather Description: ${data!.weather_description}'),
-          // tileColor: Colors.blue,
-        ),
-        ListTile(
-          title: Text('Temperature: ${data!.temp}'),
-          // tileColor: Colors.green,
-        ),
-        ListTile(
-          title: Text('Min Temperature: ${data!.min_temp}'),
-          // tileColor: Colors.yellow,
-        ),
-        ListTile(
-          title: Text('Max Temperature: ${data!.max_temp}'),
-          // tileColor: Colors.orange,
-        ),
-        ListTile(
-          title: Text('Humidity: ${data!.humidity}'),
-          // tileColor: Colors.red,
-        ),
-        ListTile(
-          title: Text('Wind Speed: ${data!.wind_speed}'),
-          // tileColor: Colors.grey,
-        ),
-      ],
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = 100.0;
+    double boxMargin = screenWidth / 4;
+    double boxMargin1 = 40;
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Container(
+            height: 100,
+            width: screenWidth,
+            margin: EdgeInsets.fromLTRB(
+                boxMargin, boxMargin1, boxMargin, boxMargin1),
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 94, 255),
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Text(
+              "Temperature : ${data!.temp}",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            )),
+          ),
+          Container(
+            height: screenHeight,
+            width: screenWidth,
+            margin: EdgeInsets.fromLTRB(
+                boxMargin, boxMargin1, boxMargin, boxMargin1),
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 94, 255),
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Text(
+              "Weather : ${data!.weather}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+          ),
+          Container(
+            height: screenHeight,
+            width: screenWidth,
+            margin: EdgeInsets.fromLTRB(
+                boxMargin, boxMargin1, boxMargin, boxMargin1),
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 94, 255),
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Text(
+              "Weather Description : ${data!.weather_description}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+          ),
+          Container(
+            height: screenHeight,
+            width: screenWidth,
+            margin: EdgeInsets.fromLTRB(
+                boxMargin, boxMargin1, boxMargin, boxMargin1),
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 94, 255),
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Text(
+              "Min Temperature : ${data!.min_temp}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+          ),
+          Container(
+            height: screenHeight,
+            width: screenWidth,
+            margin: EdgeInsets.fromLTRB(
+                boxMargin, boxMargin1, boxMargin, boxMargin1),
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 94, 255),
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Text(
+              "Max Temperature : ${data!.max_temp}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+          ),
+          Container(
+            height: screenHeight,
+            width: screenWidth,
+            margin: EdgeInsets.fromLTRB(
+                boxMargin, boxMargin1, boxMargin, boxMargin1),
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 94, 255),
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Text(
+              "Humidity : ${data!.humidity}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+          ),
+          Container(
+            height: screenHeight,
+            width: screenWidth,
+            margin: EdgeInsets.fromLTRB(
+                boxMargin, boxMargin1, boxMargin, boxMargin1),
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 0, 94, 255),
+                borderRadius: BorderRadius.circular(20)),
+            child: Center(
+                child: Text(
+              "Wind Speed: ${data!.wind_speed}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+          ),
+        ],
+      ),
     );
   }
 }

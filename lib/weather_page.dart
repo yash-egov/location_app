@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:location_app/bloc/bloc/city_lat_lon_bloc.dart';
 
@@ -26,7 +27,7 @@ class _WeatherPageScreenState extends State<WeatherPageScreen> {
 
   double? latitude, longitude;
   Weatherdetails? data;
-  String apikey = '607b7b345825d6708789aa153c57a28a';
+  final apikey = dotenv.env["API_KEY"];
 
   @override
   void initState() {
@@ -52,13 +53,8 @@ class _WeatherPageScreenState extends State<WeatherPageScreen> {
       if (response.statusCode == 200) {
         final responseData = response.data;
         if (responseData is List && responseData.isNotEmpty) {
-          // setState(() {
-          //   latitude = responseData[0]['lat'];
-          //   longitude = responseData[0]['lon'];
-          // });
           currstate.add(
               CityLatLonEvent(responseData[0]['lat'], responseData[0]['lon']));
-          // print("Fetch LL Data success");
 
           await fetchWeatherData();
         } else {
@@ -73,7 +69,6 @@ class _WeatherPageScreenState extends State<WeatherPageScreen> {
   }
 
   Future<void> fetchWeatherData() async {
-    // print("Fetch W Data ");
     var currstate = context.read<CityLatLonBloc>();
     final url = 'http://api.openweathermap.org/data/2.5/weather';
     final queryParameters = {
@@ -89,7 +84,6 @@ class _WeatherPageScreenState extends State<WeatherPageScreen> {
         final responseData = (response.data);
         print('Weather Data Yash: $responseData');
 
-        // setState(() {
         Weatherdetails currData = Weatherdetails();
         currData.weather = responseData['weather'][0]['main'];
         currData.weather_description =
@@ -100,7 +94,7 @@ class _WeatherPageScreenState extends State<WeatherPageScreen> {
         currData.humidity = responseData['main']['humidity'];
         currData.wind_speed = responseData['wind']['speed'];
         data = currData;
-        // });
+
         var cityWeatherState = context.read<CityWeatherBloc>();
         cityWeatherState.add(fetchCityWeatherDataEvent(currData));
         print(data);
@@ -114,19 +108,25 @@ class _WeatherPageScreenState extends State<WeatherPageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return (context.read<CityWeatherBloc>().state.data == null)
-        ? Scaffold(
-            appBar: AppBar(
-              title: Text("Loading..."),
-            ),
-          )
-        : Scaffold(
-            appBar: AppBar(
-              title: Text(
-                '${city} Weather Report',
-              ),
-            ),
-            body: ShowWeather(context.read<CityWeatherBloc>().state.data),
-          );
+    Future<void> _delayedBuild() async {
+      await Future.delayed(const Duration(seconds: 2));
+    }
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            '${city} Weather Report',
+          ),
+        ),
+        body: FutureBuilder<void>(
+          future: _delayedBuild(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return ShowWeather(context.read<CityWeatherBloc>().state.data);
+            }
+          },
+        ));
   }
 }
